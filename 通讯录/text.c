@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS 1
 #include "contacts.h"
 void Page()
 {
@@ -34,10 +33,10 @@ void working(Contact *p)
 				break;
 			case Printf: Printfs(p);
 				break;
-			case Exit:puts("退出通讯录\n");
+			case Exit:puts("閫�鍑洪�氳褰昞n"); DestoryContact(p);
 				break;
 			default:
-				puts("输入错误，请重新输入：\n");	
+				puts("杈撳叆閿欒锛岃閲嶆柊杈撳叆锛歕n");	
 			break;
 		}
 	} while (input);

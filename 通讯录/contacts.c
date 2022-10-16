@@ -1,34 +1,59 @@
-#define _CRT_SECURE_NO_WARNINGS 1
 #include "contacts.h"
 void Initcontact(Contact*p)
-{	
-	memset(p, 0, sizeof(*p));
+{
+	p->capacity = Max_Initsize;
+	p->size = 0;
+	Peoinfo* p1 = p->data;
+	p1 = (Peoinfo*)malloc(sizeof(Peoinfo) * Max_Initsize);
+	if (p1 == NULL)
+	{
+		perror("Initcontact malloc");
+		return;
+	}
+	memset(p1, 0, sizeof(Peoinfo)* Max_Initsize);
+	p->data = p1;
+}
+void capacity_expansion(Contact*p)									//æ‰©å®¹
+{
+	Peoinfo* p1 = p->data;
+	p1 = (Peoinfo*)realloc(p1, (p->capacity + 2) * sizeof(Peoinfo));
+	if (p1 == NULL)
+	{
+		perror("Expand capacity");
+		return;
+	}
+	p->data = p1;
+	p->capacity += 2;
+	puts("æ‰©å®¹æˆåŠŸ\n");
 }
 int Addcontact(Contact* p)
 {
-	if (p->size >= Max_datasize)
+	if (p->size==p->capacity)
 	{
-		puts("Í¨Ñ¶Â¼ÒÑÂú£¬ÎŞ·¨¼ÌĞøÌí¼Ó\n");	//´óËÕ´ò ÄĞ 20 17751111786 °¢µÏË¹µÄ
-		return 0;
+		capacity_expansion(p);	//å¤§è‹æ‰“ ç”· 20 17751111786 é˜¿è¿ªæ–¯çš„
 	}
-	puts("ÇëÒÀ´ÎÊäÈëÁªÏµÈËµÄĞÕÃû¡¢ĞÔ±ğ¡¢ÄêÁä¡¢µç»°ºÅÂëºÍµØÖ·£¬ÓÃ¿Õ¸ñ¸ô¿ª£¬ÀıÈç£ºÕÅÈı ÄĞ 22 1831111111 ĞÂÇø»¨Ô°32¶°101\n");
+	puts("è¯·ä¾æ¬¡è¾“å…¥è”ç³»äººçš„å§“åã€æ€§åˆ«ã€å¹´é¾„ã€ç”µè¯å·ç å’Œåœ°å€ï¼Œç”¨ç©ºæ ¼éš”å¼€ï¼Œä¾‹å¦‚ï¼šå¼ ä¸‰ ç”· 22 1831111111 æ–°åŒºèŠ±å›­32æ ‹101\n");
 	puts("Please input:");
 	while (1)
 	{	
+		if (p->size == p->capacity)
+		{
+			capacity_expansion(p);	
+		}
 		scanf("%s", p->data[p->size].name);
 		if (strcmp(p->data[p->size].name, "0") == 0)
 			break;
 		scanf("%s %hd %s %s", p->data[p->size].sex, &(p->data[p->size].age), p->data[p->size].tel, p->data[p->size].addr);
 		p->size++;
-		puts("\n#Ìí¼Ó³É¹¦\n");
-		puts("¼ÌĞøÌí¼Ó£¨ÊäÈë0ÖÕÖ¹£©£º\n");
+		puts("\n#æ·»åŠ æˆåŠŸ\n");
+		puts("ç»§ç»­æ·»åŠ ï¼ˆè¾“å…¥0ç»ˆæ­¢ï¼‰ï¼š\n");
 	}
 	return 1;
 }
 void Printfs(const Contact*p)
 {
 	int i;
-	printf("\n	%-15s %-10s %-10s %-20s %-50s\n", "ĞÕÃû", "ĞÔ±ğ", "ÄêÁä", "µç»°", "µØÖ·");
+	printf("\n	%-15s %-10s %-10s %-20s %-50s\n", "å§“å", "æ€§åˆ«", "å¹´é¾„", "ç”µè¯", "åœ°å€");
 	for(i=0;i<p->size;i++)
 	{ 
 		printf("	%-15s %-10s %-10hd %-20s %-50s\n", p->data[i].name, p->data[i].sex,p->data[i].age, p->data[i].tel, p->data[i].addr);
@@ -45,22 +70,35 @@ int find(Contact* p,char name[])
 	}
 	return -1;
 }
+void capacity_reduce(Contact*p)									//å‡å®¹
+{
+	Peoinfo* p1 = p->data;
+	p1 = (Peoinfo*)realloc(p1, (p->capacity-1) * sizeof(Peoinfo));
+	if (p1 == NULL)
+	{
+		perror("Reduce capacity");
+		return;
+	}
+	p->data = p1;
+	p->capacity -= 1;
+	puts("\nå‡å®¹æˆåŠŸ\n");
+}
 int deletes(Contact* p) 
 {
 	if (p->size <= 0)
 	{
-		puts("Í¨Ñ¶Â¼ÒÑ¿Õ£¡");
+		puts("é€šè®¯å½•å·²ç©ºï¼");
 		return 0;
 	}
 	char name1[Max_namesize]={0};
 	int i=0;
-	puts("ÇëÊäÈëÒªÉ¾³ıµÄÁªÏµÈËĞÕÃû£º\n");
+	puts("è¯·è¾“å…¥è¦åˆ é™¤çš„è”ç³»äººå§“åï¼š\n");
 	getchar();
 	gets(name1);
 	i=find(p,name1);
 	if (i == -1)
 	{
-		puts("´íÎó£¬ÒªÉ¾³ıµÄÁªÏµÈË²»´æÔÚ\n");
+		puts("é”™è¯¯ï¼Œè¦åˆ é™¤çš„è”ç³»äººä¸å­˜åœ¨\n");
 		return 0;
 	}
 	for (; i-1 < p->size; i++)
@@ -72,43 +110,44 @@ int deletes(Contact* p)
 		strcpy(p->data[i].addr, p->data[i + 1].addr);
 	}
 	p->size--;
-	puts("\n#É¾³ı³É¹¦\n\n\n");
+	capacity_reduce(p);
+	puts("\n#åˆ é™¤æˆåŠŸ\n\n\n");
 	return 1;
 }
 int searchs(Contact* p)
 {
 	int i;
 	char name1[Max_namesize] = { 0 };
-	puts("ÇëÊäÈëÒª²éÕÒµÄÁªÏµÈËĞÕÃû£º\n");
+	puts("è¯·è¾“å…¥è¦æŸ¥æ‰¾çš„è”ç³»äººå§“åï¼š\n");
 	getchar();
 	gets(name1);
 	i = find(p, name1);
 	if (i == -1)
 	{
-		puts("´íÎó£¬Òª²éÕÒµÄÁªÏµÈË²»´æÔÚ\n");
+		puts("é”™è¯¯ï¼Œè¦æŸ¥æ‰¾çš„è”ç³»äººä¸å­˜åœ¨\n");
 		return 0;
 	}
-	printf("ĞÕÃû:%s\nĞÔ±ğ£º%s\nÄêÁä£º%hd\nºÅÂë£º%s\nµØÖ·£º%s\n\n\n", p->data[i].name, p->data[i].sex, p->data[i].age, p->data[i].tel, p->data[i].addr);
+	printf("å§“å:%s\næ€§åˆ«ï¼š%s\nå¹´é¾„ï¼š%hd\nå·ç ï¼š%s\nåœ°å€ï¼š%s\n\n\n", p->data[i].name, p->data[i].sex, p->data[i].age, p->data[i].tel, p->data[i].addr);
 	return 1;
 }
 int modifys(Contact* p)
 {
 	int i;
 	char name1[Max_namesize] = { 0 };
-	puts("ÇëÊäÈëĞŞ¸ÄÏîµÄÁªÏµÈËĞÕÃû£º\n");
+	puts("è¯·è¾“å…¥ä¿®æ”¹é¡¹çš„è”ç³»äººå§“åï¼š\n");
 	getchar();
 	gets(name1);
 	i = find(p, name1);
 	if (i == -1)
 	{
-		puts("´íÎó£¬ĞŞ¸ÄÏî²»´æÔÚ\n");
+		puts("é”™è¯¯ï¼Œä¿®æ”¹é¡¹ä¸å­˜åœ¨\n");
 		return 0;
 	}
-	printf("ĞÕÃû:%s\nĞÔ±ğ£º%s\nÄêÁä£º%hd\nºÅÂë£º%s\nµØÖ·£º%s\n\n\n", p->data[i].name, p->data[i].sex, p->data[i].age, p->data[i].tel, p->data[i].addr);
-	puts("ÇëÒÀ´ÎÊäÈëÁªÏµÈËµÄĞÕÃû¡¢ĞÔ±ğ¡¢ÄêÁä¡¢µç»°ºÅÂëºÍµØÖ·£¬ÓÃ¿Õ¸ñ¸ô¿ª£¬ÀıÈç£ºÕÅÈı ÄĞ 22 1831111111 ĞÂÇø»¨Ô°32¶°101\n");
+	printf("å§“å:%s\næ€§åˆ«ï¼š%s\nå¹´é¾„ï¼š%hd\nå·ç ï¼š%s\nåœ°å€ï¼š%s\n\n\n", p->data[i].name, p->data[i].sex, p->data[i].age, p->data[i].tel, p->data[i].addr);
+	puts("è¯·ä¾æ¬¡è¾“å…¥è”ç³»äººçš„å§“åã€æ€§åˆ«ã€å¹´é¾„ã€ç”µè¯å·ç å’Œåœ°å€ï¼Œç”¨ç©ºæ ¼éš”å¼€ï¼Œä¾‹å¦‚ï¼šå¼ ä¸‰ ç”· 22 1831111111 æ–°åŒºèŠ±å›­32æ ‹101\n");
 	puts("Please input:");
 	scanf("%s %s %hd %s %s", p->data[i].name, p->data[i].sex, &(p->data[i].age), p->data[i].tel, p->data[i].addr);
-	puts("\n#ĞŞ¸Ä³É¹¦\n");
+	puts("\n#ä¿®æ”¹æˆåŠŸ\n");
 	return 1;
 }
 int cmp(const void* a, const void* b)
@@ -124,5 +163,12 @@ void sorts(Contact* p)
 {
 	int (*pcmp)(const void*, const void*)=cmp;
 	qsort(p->data, p->size, sizeof(p->data[0]),pcmp);
-	puts("ÅÅĞòÍê³É\n\n\n");
+	puts("æ’åºå®Œæˆ\n\n\n");
+}
+void DestoryContact(Contact* p)
+{
+	free(p->data);
+	p->data = NULL;
+	p->size = 0;
+	p->capacity = 0;
 }

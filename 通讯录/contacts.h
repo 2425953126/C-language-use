@@ -1,9 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #define Max_namesize 20
-#define Max_datasize 1000
+#define Max_Initsize 2												//æ¯æ¬¡æ‰©å®¹æ·»åŠ çš„ç©ºé—´
 typedef struct Peoinfo
 {
 	char name[Max_namesize];
@@ -14,8 +13,9 @@ typedef struct Peoinfo
 }Peoinfo;
 typedef struct Contact
 {
-	Peoinfo data[Max_datasize];
+	Peoinfo *data;
 	int size;
+	int capacity;
 }Contact;
 enum opt
 {
@@ -27,9 +27,10 @@ enum opt
 	Printf,
 	Exit=0,
 };
-void Initcontact(Contact* p);											//³õÊ¼»¯
-int Addcontact(Contact* p);												//Ìí¼ÓÁªÏµÈË
-void Printfs(const Contact* p);											//´òÓ¡
-int searchs(Contact* p);												//²éÕÒ
-int deletes(Contact* p);												//É¾³ı
-void sorts(Contact* p);													//ÅÅĞòÕûÀíÍ¨Ñ¶Â¼
+void Initcontact(Contact* p);											//åˆå§‹åŒ–
+int Addcontact(Contact* p);												//æ·»åŠ è”ç³»äºº
+void Printfs(const Contact* p);											//æ‰“å°
+int searchs(Contact* p);												//æŸ¥æ‰¾
+int deletes(Contact* p);												//åˆ é™¤
+void sorts(Contact* p);													//æ’åºæ•´ç†é€šè®¯å½•
+void DestoryContact(Contact* p);										//é”€æ¯
