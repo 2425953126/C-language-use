@@ -10,7 +10,6 @@ void capacity_expansion(Contact* p)									//扩容
 	}
 	p->data = p1;
 	p->capacity += 2;
-	puts("扩容成功\n");
 }
 void Initcontact(Contact*p)
 {
@@ -99,7 +98,7 @@ void capacity_reduce(Contact*p)									//减容
 	}
 	p->data = p1;
 	p->capacity -= 1;
-	puts("\n减容成功\n");
+	puts("\n#空间已回收\n");
 }
 int deletes(Contact* p) 
 {

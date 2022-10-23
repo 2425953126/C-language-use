@@ -1,14 +1,14 @@
 #include "contacts.h"
 void Page()
 {
-	puts("####################################################\n");
-	puts("##  ****** 1.add    ********* 2.delete *********  ##\n");
-	puts("##                                                ##\n");
-	puts("##  ****** 3.search ********* 4.modify *********  ##\n");
-	puts("##                                                ##\n");
-	puts("##  ****** 5.sort   ********* 6.printf *********  ##\n");
-	puts("##                   0.exit                       ##\n");
-	puts("####################################################\n");
+	puts("				####################################################\n");
+	puts("				##  ****** 1.add    ********* 2.delete *********  ##\n");
+	puts("				##                                                ##\n");
+	puts("				##  ****** 3.search ********* 4.modify *********  ##\n");
+	puts("				##                                                ##\n");
+	puts("				##  ****** 5.sort   ********* 6.printf *********  ##\n");
+	puts("				##                   0.exit                       ##\n");
+	puts("				####################################################\n");
 	puts("\n#Please   input:\n");
 }
 void working(Contact *p)
@@ -42,8 +42,8 @@ void working(Contact *p)
 	} while (input);
 }
 int main()
-{
+{	
+	system("color F0");
 	Contact number1;
 	working(&number1);
-	return 0;
 }

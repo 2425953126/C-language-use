@@ -1,6 +1,8 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <windows.h>
 #define Max_namesize 20
 #define Max_Initsize 2												//每次扩容添加的空间
 typedef struct Peoinfo
