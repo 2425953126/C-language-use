@@ -45,4 +45,5 @@ int main()
 {
 	Contact number1;
 	working(&number1);
+	return 0;
 }

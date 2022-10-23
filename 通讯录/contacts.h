@@ -33,4 +33,4 @@ void Printfs(const Contact* p);											//打印
 int searchs(Contact* p);												//查找
 int deletes(Contact* p);												//删除
 void sorts(Contact* p);													//排序整理通讯录
-void DestoryContact(Contact* p);										//销毁
+void DestoryContact(Contact* p);										//销毁通讯表并将内容存储至文件
