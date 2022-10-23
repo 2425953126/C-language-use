@@ -1,4 +1,17 @@
 #include "contacts.h"
+void capacity_expansion(Contact* p)									//扩容
+{
+	Peoinfo* p1 = p->data;
+	p1 = (Peoinfo*)realloc(p1, (p->capacity + 2) * sizeof(Peoinfo));
+	if (p1 == NULL)
+	{
+		perror("Expand capacity");
+		return;
+	}
+	p->data = p1;
+	p->capacity += 2;
+	puts("扩容成功\n");
+}
 void Initcontact(Contact*p)
 {
 	p->capacity = Max_Initsize;
@@ -12,19 +25,24 @@ void Initcontact(Contact*p)
 	}
 	memset(p1, 0, sizeof(Peoinfo)* Max_Initsize);
 	p->data = p1;
-}
-void capacity_expansion(Contact*p)									//扩容
-{
-	Peoinfo* p1 = p->data;
-	p1 = (Peoinfo*)realloc(p1, (p->capacity + 2) * sizeof(Peoinfo));
-	if (p1 == NULL)
+	FILE* contactbook =NULL;
+	if ((contactbook=fopen("contactbook.txt","ab+"))==NULL)
 	{
-		perror("Expand capacity");
+		perror("Contactbook fopen");
 		return;
 	}
-	p->data = p1;
-	p->capacity += 2;
-	puts("扩容成功\n");
+	Peoinfo tmp = { 0 };
+	while (fread(&tmp, sizeof(Peoinfo), 1, contactbook))
+	{
+		if (p->size == p->capacity)
+		{
+			capacity_expansion(p);	//大苏打 男 20 17751111786 阿迪斯的
+		}
+		p->data[p->size] = tmp;
+		p->size++;	
+	}
+	fclose(contactbook);
+	contactbook = NULL;
 }
 int Addcontact(Contact* p)
 {
@@ -167,6 +185,19 @@ void sorts(Contact* p)
 }
 void DestoryContact(Contact* p)
 {
+	FILE* contactbook = fopen("contactbook.txt", "wb");
+	if (contactbook == NULL)
+	{
+		perror("Write failed");
+		return;
+	}
+	int i = 0;
+	while (i<p->size)
+	{	
+		fwrite(&p->data[i], sizeof(Peoinfo), 1, contactbook);
+		i++;
+	}
+	fclose(contactbook);
 	free(p->data);
 	p->data = NULL;
 	p->size = 0;
