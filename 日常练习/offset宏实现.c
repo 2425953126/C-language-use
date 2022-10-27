@@ -7,7 +7,7 @@
 								count++;							\
 								stu = (char*)stu + 1;				\
 							}										\
-							printf(#x"��Ա�׵�ַƫ��Ϊ%d\n",count);	\
+							printf(#x"成员首地址偏移为%d\n",count);	 \
 
 int main()
 {
