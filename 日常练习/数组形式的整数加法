@@ -1,0 +1,43 @@
+int* addToArrayForm(int* num, int numSize, int k, int* returnSize){
+    int x,y,i,t,cf;
+    t=k;
+    i=0;
+    while(t=t/10)
+        i++;
+    int*sum=(int*)malloc((i>numSize?i+2:numSize+2)*sizeof(int));
+    for(i=numSize-1,t=x=y=cf=0;i>=0;i--,t++)
+    {
+        x=num[i];
+        y=k%10;
+        k/=10;
+        x=x+y+cf;
+        cf=0;
+        if(x>=10)
+            {
+                x%=10;
+                cf=1;
+            }
+       sum[t]=x;                    //t=5就是返回数组的长度
+    }
+        while(k!=0||cf!=0)
+        {
+            y=k%10;
+            k/=10;
+            y=y+cf;
+            cf=0;
+            if(y>=10)
+            {
+                y%=10;
+                cf=1;
+            }
+            sum[t++]=y;         //t为返回数组长度
+        }
+    for(i=0;i<t/2;i++)
+        {
+            cf=sum[i];
+            sum[i]=sum[t-i-1];
+            sum[t-i-1]=cf;
+        }
+        *returnSize=t;
+        return sum;
+}
