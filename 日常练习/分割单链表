@@ -1,0 +1,32 @@
+struct ListNode* partition(struct ListNode* pHead, int x)
+ {
+        struct ListNode* newhead = NULL, * oldhead = pHead, * pf = NULL, * p = NULL,
+                  * np = NULL, * tmp = NULL;
+        oldhead=(struct ListNode*)malloc(sizeof(struct ListNode));
+        newhead = (struct ListNode*)malloc(sizeof(struct ListNode));
+        oldhead->next=pHead;
+        pf = oldhead;
+        p = pf->next;
+        np = newhead;
+        while (p) {
+            if (p->val < x) {
+                tmp = p;
+                pf->next = tmp->next;         //缝合旧链表
+                p = p->next;
+
+
+                np->next = tmp;               //连接新链表
+                tmp->next = NULL;
+                //各类指针往后走
+                np = np->next;
+            } else {
+                pf = pf->next;
+                p = p->next;
+            }
+        }
+        np->next = oldhead->next;
+        free (oldhead);
+        oldhead = NULL;
+        pHead = NULL;
+        return newhead->next;
+}
