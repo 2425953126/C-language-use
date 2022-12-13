@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct TreeNode
+{
+    char val;
+    struct TreeNode*left;
+    struct TreeNode*right;
+}TreeNode;
+TreeNode*Createtrees(char*str,int* i)
+{
+    if(str[*i]=='#') 
+           {    
+               (*i)++;
+                return NULL;
+           }
+    TreeNode*root=(TreeNode*)malloc(sizeof(TreeNode));
+    root->val=str[(*i)++];
+    root->left=Createtrees(str,i);
+    root->right=Createtrees(str,i);
+    return root;
+}
+void inorderprint(TreeNode*root)
+{
+    if(root==NULL)
+        return;
+    inorderprint(root->left);
+    printf("%c ",root->val);
+    inorderprint(root->right);
+}
+int main() {
+    char str[100]={0};
+    scanf("%s",str);
+    int i=0;
+    TreeNode*p=Createtrees(str,&i);
+    inorderprint(p);
+    return 0;
+}
