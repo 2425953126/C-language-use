@@ -1,0 +1,44 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+bool isSameTree1(struct TreeNode* p, struct TreeNode* q){
+    if(!p||!q)
+        return p==q;
+    else
+        if(p->val!=q->val)
+            return false;
+    if(p->left)
+        if(!(q->left&&p->left->val==q->left->val))
+            return false;
+    if(p->right)
+        if(!(q->right&&p->right->val==q->right->val))
+            return false;
+    return isSameTree1(p->left,q->left)&&isSameTree1(p->right,q->right);
+}
+bool ergodic(struct TreeNode*root,struct TreeNode* subRoot)
+{
+    if(root==NULL)
+        return false;
+    if(root->val==subRoot->val)
+        if(isSameTree1(root,subRoot))
+            return true;
+    if(ergodic(root->left,subRoot))
+        return true;
+    return ergodic(root->right,subRoot);
+}
+bool isSubtree(struct TreeNode* root, struct TreeNode* subRoot)
+{
+    if(root==NULL)
+        if(subRoot==NULL)
+             return true;
+        else
+            return false;
+        if(subRoot==NULL)
+            return true;
+    return ergodic(root,subRoot);
+}
