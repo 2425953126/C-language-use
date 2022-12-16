@@ -63,5 +63,5 @@ int StackSize(Stack* ps)
 int StackEmpty(Stack* ps)
 {
 	assert(ps);
-	return ps->top > -1 ? 1 : 0;
+	return ps->top > -1 ? 0 : 1;
 }

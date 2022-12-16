@@ -7,7 +7,7 @@ void text(Stack*ps)
 	StackPush(ps, 2);
 	StackPush(ps, 3);
 	StackPush(ps, 4);
-	while (StackEmpty(ps))
+	while (!StackEmpty(ps))
 	{
 		printf(" %d", StackTop(ps));
 		StackPop(ps);
