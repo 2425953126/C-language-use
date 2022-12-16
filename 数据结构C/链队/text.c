@@ -10,7 +10,7 @@ void text(QNode* q)
 	QueuePush(q,10);
 	printf("%d \n", QueueSize(q));
 	printf("%d \n", QueueBack(q));
-	while (QueueEmpty(q))
+	while (!QueueEmpty(q))
 	{
 		printf("%d ", QueueFront(q)) ;
 		QueuePop(q);

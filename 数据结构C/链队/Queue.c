@@ -1,12 +1,12 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "Queue.h"
-// ЁУй╪╩╞╤сап 
+// Е┬²Е╖▀Е▄√И≤÷Е┬≈ 
 void QueueInit(Queue* q)
 {
 	q->front = NULL;
 	q->rear = NULL;
 }
-// ╤сн╡хК╤сап 
+// И≤÷Е╟╬Е┘╔И≤÷Е┬≈ 
 void QueuePush(Queue* q, QDataType data)
 {	
 	assert(q);
@@ -15,38 +15,38 @@ void QueuePush(Queue* q, QDataType data)
 	tmp->next = NULL;
 	if (q->rear != NULL)
 	{	
-		q->rear->next = tmp;//а╢╫с╣╫╤сап╣дн╡╡©
-		q->rear = tmp;//пбтЖ╣дЁит╠╠Дн╙пб╣дн╡╡©
+		q->rear->next = tmp;//И⌠╬Ф▌╔Е┬╟И≤÷Е┬≈Г └Е╟╬И┐╗
+		q->rear = tmp;//Ф√╟Е╒·Г └Ф┬░Е▒≤Е▐≤Д╦╨Ф√╟Г └Е╟╬И┐╗
 	}
 	else
 	{
-		q->rear = tmp;//хГ╧Ш╤сапт╜╠╬н╙©у,тРпбтЖ╣дЁит╠ж╠╫с╠Дн╙пб╣дн╡╡©╨мм╥╡©
+		q->rear = tmp;//Е╕┌Ф·°И≤÷Е┬≈Е▌÷Ф°╛Д╦╨Г╘╨,Е┬≥Ф√╟Е╒·Г └Ф┬░Е▒≤Г⌡╢Ф▌╔Е▐≤Д╦╨Ф√╟Г └Е╟╬И┐╗Е▓▄Е╓╢И┐╗
 		q->front = tmp;;
 	}
 }
-// ╤см╥ЁЖ╤сап 
+// И≤÷Е╓╢Е┤╨И≤÷Е┬≈ 
 void QueuePop(Queue* q)
 {
 	assert(q && q->front !=NULL);
 	QNode* tmp = q->front;
-	q->front = q->front->next;//╤см╥ж╦оР╤сапжп╣з╤Чн╩Ёит╠ак
-	if (q->front == NULL)//хГ╧Ш╢кй╠р╙и╬ЁЩ╣д╤см╥ря╬╜н╙╤сн╡т╙кь,тРр╙р╩╡╒пч╦д╤сн╡ж╦уК
+	q->front = q->front->next;//И≤÷Е╓╢Ф▄┤Е░▒И≤÷Е┬≈Д╦╜Г╛╛Д╨▄Д╫█Ф┬░Е▒≤Д╨├
+	if (q->front == NULL)//Е╕┌Ф·°Ф╜╓Ф≈╤Х╕│Е┬═И≥╓Г └И≤÷Е╓╢Е╥╡Г╩▐Д╦╨И≤÷Е╟╬Е┘┐Г╢═,Е┬≥Х╕│Д╦─Е╧╤Д©╝Ф■╧И≤÷Е╟╬Ф▄┤И▓┬
 		q->rear = NULL;
-	free(tmp);//и╬ЁЩт╜╤см╥Ёит╠
+	free(tmp);//Е┬═И≥╓Е▌÷И≤÷Е╓╢Ф┬░Е▒≤
 }
-// ╩Ях║╤сапм╥╡©т╙кь 
+// Х▌╥Е▐√И≤÷Е┬≈Е╓╢И┐╗Е┘┐Г╢═ 
 QDataType QueueFront(Queue* q)
 {
 	assert(q&&q->front!=NULL);
 	return q->front->data;
 }
-// ╩Ях║╤сап╤сн╡т╙кь 
+// Х▌╥Е▐√И≤÷Е┬≈И≤÷Е╟╬Е┘┐Г╢═ 
 QDataType QueueBack(Queue* q)
 {
 	assert(q && q->rear != NULL);
 	return q->rear->data;
 }
-// ╩Ях║╤сапжпспп╖т╙кь╦ЖйЩ 
+// Х▌╥Е▐√И≤÷Е┬≈Д╦╜Ф°┴Ф∙┬Е┘┐Г╢═Д╦╙Ф∙╟ 
 int QueueSize(Queue* q)
 {	
 	assert(q);
@@ -61,21 +61,21 @@ int QueueSize(Queue* q)
 	}
 	return count;
 }
-// ╪Л╡Б╤сапйг╥Ян╙©уё╛хГ╧Шн╙©у╥╣╩ь╥гаЦ╫А╧Шё╛хГ╧Ш╥г©у╥╣╩ь0 
+// Фё─Ф╣▀И≤÷Е┬≈Ф≤╞Е░╕Д╦╨Г╘╨О╪▄Е╕┌Ф·°Д╦╨Г╘╨Х©■Е⌡·И²·И⌡╤Г╩⌠Ф·°О╪▄Е╕┌Ф·°И²·Г╘╨Х©■Е⌡·0 
 int QueueEmpty(Queue* q)
 {
-	return q->front == NULL ? 0 : 1;
+	return q->front == NULL ? 1: 0;
 }
-// оЗ╩ы╤сап 
+// И■─Ф╞│И≤÷Е┬≈ 
 void QueueDestroy(Queue* q)
 {
 	assert(q);
 	QNode* tmp =NULL;
-	while (q->front!=NULL)//хГ╧Ш╤см╥╠╬ю╢╬мн╙©у,╬м╡╩╠ьж╢ппак
+	while (q->front!=NULL)//Е╕┌Ф·°И≤÷Е╓╢Ф°╛Ф²╔Е╟╠Д╦╨Г╘╨,Е╟╠Д╦█Е©┘Ф┴╖Х║▄Д╨├
 	{	
 			tmp = q->front;
 			q->front = q->front->next;
 			free(tmp);
 	}
-	q->rear = NULL;//╤сн╡ж╦уКр╡пХн╙©у,╥ЯтР╠Дн╙р╟ж╦уК╡╩╟╡х╚
+	q->rear = NULL;//И≤÷Е╟╬Ф▄┤И▓┬Д╧÷И°─Д╦╨Г╘╨,Е░╕Е┬≥Е▐≤Д╦╨И┤▌Ф▄┤И▓┬Д╦█Е╝┴Е┘╗
 }
